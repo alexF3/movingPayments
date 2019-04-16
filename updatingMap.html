@@ -47,7 +47,7 @@
 
 
 
-        // Load GeoJSON data and merge with states data
+        // Load GeoJSON data 
         d3.json("us-states.json", function (json) {
 
             // Loop through each state data value in the .csv file
@@ -85,7 +85,7 @@
                 .style("fill", function (d) {
 
                     // Get data value
-                    var value = d.properties.visited;
+                    var value = null;
 
                     if (value) {
                         //If value exists…
@@ -98,6 +98,8 @@
 
         });
 
+        // Update function to change circles by day
+        // Called by timer function "myTimer()" below
         function updateMap(dayDisp) {
 
             var circles = svg.selectAll("circle")
@@ -134,10 +136,11 @@
                 })
                 .style("fill", "rgb(217,91,67)")
                 .style("opacity", 0.6)
-            console.log(circles.length);
+            // console.log(circles.length);
         };
 
 
+        // Update the map on a timer...1 day per second
         var myVar = setInterval(myTimer, 1000);
         var dayDisp = 3;
         function myTimer() {
