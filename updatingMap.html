@@ -132,11 +132,11 @@
                     return projection([d.long, d.lat])[1];
                 })
                 .attr("r", function (d) {
-                    return Math.sqrt(d.years) / 4;
+                    return Math.sqrt(d.pay) / 4;
                 })
                 .style("fill", "rgb(217,91,67)")
                 .style("opacity", 0.6)
-            // console.log(circles.length);
+            console.log(circles.length);
         };
 
 
