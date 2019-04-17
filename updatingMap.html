@@ -18,7 +18,8 @@
     <script src="payments.js"></script>
 
     <script type="text/javascript">
-
+        // Add id to each payment
+        data = data.map(function(d,i) {d.id=i; return d;})
 
         //Width and height of map
         var width = 960;
@@ -102,18 +103,20 @@
         // Called by timer function "myTimer()" below
         function updateMap(dayDisp) {
 
+            var data_for_day = data.filter(function(d) { return d.day == dayDisp});
+
             var circles = svg.selectAll("circle")
-                .data(data,function(d){return d});
+                .data(data_for_day, function(d){return d.id});
 
 
 
             var t = d3.transition()
-                .duration(750);
+                .duration(10);
 
 
             // EXIT old elements not present in new data.
             circles.exit()
-                .attr("class", "exit")
+                // .classed()
                 .transition(t)
                 .attr("r",1e-6)
                 .style("fill-opacity", 1e-6)
@@ -124,7 +127,7 @@
 
             // ENTER new elements present in new data.
             circles.enter().append("circle")
-                .filter(function (d) { return d.day == dayDisp })
+                .attr("class", "payment")
                 .attr("cx", function (d) {
                     return projection([d.long, d.lat])[0];
                 })
@@ -141,7 +144,7 @@
 
 
         // Update the map on a timer...1 day per second
-        var myVar = setInterval(myTimer, 1000);
+        var myVar = setInterval(myTimer, 50);
         var dayDisp = 3;
         function myTimer() {
             dayDisp += 1;
