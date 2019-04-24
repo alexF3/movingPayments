@@ -105,28 +105,27 @@
 
             var data_for_day = data.filter(function(d) { return d.day == dayDisp});
 
-            var circles = svg.selectAll("circle")
+            var circles = svg.selectAll(".payment")
                 .data(data_for_day, function(d){return d.id});
-
-
-
-            var t = d3.transition()
-                .duration(10);
-
 
             // EXIT old elements not present in new data.
             circles.exit()
-                // .classed()
-                .transition(t)
-                .attr("r",1e-6)
-                .style("fill-opacity", 1e-6)
-                .remove();
+                // .classed("oldPayments")
+                //.style("color","blue")
+                .classed("payment", false)
+                //.classed("exiting", true)
+                .transition()
+                    .duration(2000)
+                        .attr("r",0)
+                        .style("fill-opacity", 0)
+                        .remove();
 
             // UPDATE old elements present in new data.
                 //n/a
 
             // ENTER new elements present in new data.
             circles.enter().append("circle")
+                // .classed("newPayments")
                 .attr("class", "payment")
                 .attr("cx", function (d) {
                     return projection([d.long, d.lat])[0];
@@ -144,7 +143,7 @@
 
 
         // Update the map on a timer...1 day per second
-        var myVar = setInterval(myTimer, 50);
+        var myVar = setInterval(myTimer, 100);
         var dayDisp = 3;
         function myTimer() {
             dayDisp += 1;
